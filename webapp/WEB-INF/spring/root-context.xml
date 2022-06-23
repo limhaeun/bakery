@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+	
+	<!-- 0. DB연결 정보 경로 설정 -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations"
+			value="classpath:config/dbconn.properties" />
+	</bean>
+	
+	 <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="465" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="username" value="logintestspring7777@gmail.com" />
+        <property name="password" value="oraclejava" />
+       
+        <property name="javaMailProperties">
+		<props>
+			<prop key="mail.debug">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+			<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtps.ssl.trust">*</prop>
+			<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+		</props>
+	</property>
+       
+    </bean>
+    
+    <bean id="email" class="com.seven.team01.vo.EmailVO"></bean>
+    <bean id="emailSender" class="com.seven.team01.service.EmailSenderService"></bean>
+	
+	<!-- 1. 성능 스프링이 직접 톰캣 제공 DBCP 및 JNDI 참조하여 마이바티스와 연동 jn(name)di 
+			: 자원을 참조하는 방법이 그 자원 이름(SpringBoardDB)으로 식별 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxActive" value="20" />
+		<property name="maxIdle" value="10" />
+		<property name="maxWait" value="-1" />
+	</bean>
+	
+	
+
+	<!-- mybatis-spring-1.2.0.jar classpath : src/main/resources -->
+	<!-- 2. 스프링 - 마이바티스 - CP 및 JNDI 참조 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"	value="classpath:config/mybatis.xml" />
+		<!-- * 사용 모든 매퍼파일을 한번에 지정 가능 -->
+		<property name="mapperLocations" value="classpath:sqlmap/*.xml" />
+	</bean>
+
+
+	<!-- 3. 트랜잭션 Manager설정 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+		
+	</bean>
+	
+	<!-- 트랜잭션 설정 어노테이션 , @Transactional 어노테이션을 이용한 트랜잭션 관리가 가능. aopalliance-1.0.jar 필요 transactional 어노테이션 활성화 -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- 4. mybatis-spring-1.2.3.jar 가 제공하는 mybatis SqlSessionTemplate클래스로 쉽게 
+		mybatis쿼리문 실행객체 sqlSession을 생성한다. -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+
+		<constructor-arg name="sqlSessionFactory"
+			ref="sqlSessionFactory" />
+		<!-- mybatis 쿼리문 실행객체 sqlSession을 사용하기 위해서 생성자 통한 의존성을 주입 -->
+	</bean>
+
+	<!-- ==========파일업로드 ========== -->
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+
+	<!-- 비지니스 서비스 오토스캔(자동으로 찾아준다.) 추가 @Service
+	     이 패키지 역할은 첫번째 컨트롤과 DAO을 연결하는 중간 매개체 
+		역할을 한다. 고객의 추가요구사항을 반영할 때 개발로직코드를 유연하게 작성가능하게 한다.  트랜잭션 적용 핵심. -->
+	<context:component-scan
+		base-package="com.seven.team01.service" />
+	<!-- DAO가 @Repository이 설정되어서 스프링에서 해당 패키지를 자동스캔해서 빈등록을 하게함. -->
+	<context:component-scan
+		base-package="com.seven.team01.dao" />
+		
+		
+	
+</beans>
+
+

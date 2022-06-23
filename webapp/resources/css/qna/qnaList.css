@@ -1,0 +1,91 @@
+	@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }	
+	body {
+	    padding: 0; 
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;
+    }       
+   .QnAList{					/* 게시판 전체 영역 */         
+        position: relative;      
+        padding: 10px 20px; 
+        margin: 40px 100px;
+        height: 80%;       
+    }
+    .QnA_title {				/* 게시판 타이틀 */
+		padding: 35px;
+		text-align: center;
+		border-bottom: 2px solid #FE9A2E;
+		width: 100%;	
+	}
+	.QnA_content {				/* 게시판 영역 */
+		padding: 35px;
+	}
+   padding: 5px 0; */
+	}	
+	.QnATable tr:nth-child(even){background-color: #f2f2f2;}	
+		
+	.btn_qna {					/* 문의 버튼 */			
+		float: right;
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.5em;
+        width: 5.5em;
+        padding: 0;
+        color: white;
+        margin: 0 10px 15px;        
+	}
+	.btn_qna:hover {					/* 문의 버튼 */			
+		border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400;           
+	}
+	.map {                   /* 찾아오시는 길 */		
+		 position: relative;  
+		 width: 760px;
+		 height: 400px;
+		 margin-left: 175px;    
+		 margin-top: 40px;
+	}
+	.mapTable {
+		width: 760px;
+		margin-top: 20%;
+		border-top: 2px solid #f2f2f2;
+		margin-left: 175px; 
+		margin-top: 40px;
+		color: #585858;
+	}
+	table, tr, td, th{
+		border: solid 1px #f2f2f2;
+		border-collapse:collapse;
+		padding: 7px;
+	}
+	table.mapTable  th {
+		text-align: center;
+		 background-color: #fafbfc;
+	}
+	#post_title {				/* 문의글 제목 링크 */
+		color: black;
+	}
+	#post_title:hover {
+		color: #ff9d4a;
+		text-decoration:none; 
+	}	
+    .pagenum {					/* 페이징 */  
+		text-align:center;	
+		margin-top: 40px;		
+	} 
+	#paging_btn {				  /* 페이징 버튼색상 */
+		color: black;
+	} 
+	#paging_btn:hover {
+		color: #FE9A2E;
+	}  

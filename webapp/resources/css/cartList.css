@@ -1,0 +1,78 @@
+@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }
+    body {
+	    margin: 0;
+	    padding: 0; 
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;
+    }
+    .bag_list {				  	/* 장바구니 전체영역 */         
+        position: relative;      
+        padding: 15px; 
+        margin: 40px 100px;            
+    }
+    .bag_title {			  	/* 장바구니 타이틀 영역 */
+    	padding: 35px;
+		text-align: center;
+		border-bottom: 2px solid #FE9A2E;
+		width: 100%;
+    }
+    .bag_result {			  	/* 장바구니 목록 */
+		padding: 50px;
+	}
+	form .numBox {				/* 장바구니 - 수량수정폼 */
+		width: 50px;
+	}	
+	.bag_btn {					/* 장바구니 - 수정,삭제버튼  */
+		display: inline;
+        border-radius: 10px;
+       	border: 2px solid #fb7400;
+        background-color: transparent;
+        color: #fb7400;   
+        height: 2.5em;
+        width: 3.3em;
+        margin: 0 5px;        
+	}
+	.bag_btn:hover {
+		 background-color: #fc8727; 
+		 color: white; 
+	}
+	.selectOrder {				/* 장바구니 - 결제버튼 영역 */
+		text-align: right;
+		margin: 20px 0;
+	} 	
+	.selectOrder_btn {			/* 장바구니 - 결제버튼 */
+		display: inline;
+		border-width: 0rem;
+        border-radius: 50px;
+        background-color: #fc8727;  
+        height: 2.5em;
+        width: 6.5em;
+        margin: 0 5px;
+        color: white;
+        font weight: bold;
+        font-size: 1.2rem;
+                         
+	}
+	.selectOrder_btn:hover {	
+        border: 2px solid #fb7400;
+        background-color: transparent;
+        color: #fb7400;        
+                  
+	}
+	.sum {					  	/* 총결제금액 영역 */
+		text-align: right;
+		top: 50%;
+		font-weight: bold;		 
+	} 
+	#sum {					  	/* 총결제금액 - 입력창 */		
+		border: none;			
+	} 

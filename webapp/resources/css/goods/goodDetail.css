@@ -1,0 +1,174 @@
+﻿@charset "UTF-8";
+@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }	
+	body {
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;
+		
+    }
+	.content {					/* 전체 컨텐츠 부모 영역 */
+       	width: 1200px;
+	    margin: 0 auto;
+	    padding: 70px 0 160px;
+    }
+    .content_main{				/* 전체 컨텐츠 자식 영역  */
+    	width: 940px;
+  		margin: 0 auto;
+	}	
+	.row {						/* 제품이미지 + 제품설명 영역 */
+	    position: relative;	    	
+	    padding: 0 0 50px 25px;
+	    border-bottom: 2px solid #FE9A2E;
+    }
+    #cate_item {				/* 카테고리 링크 */
+		color: black;
+	}
+	#img{						/* 제품이미지 태그 */
+   		position: relative;
+	    top: 0;
+	    bottom: 50px;
+	    left: 0;
+	    width: 425px;
+	    text-align: center;		 		
+	}	
+	.goods_detail {				/* 제품설명 - 전체 */
+		padding: 0 45px;
+		width: 500px;
+	}
+	.gName {					/* 제품설명 - 타이틀 */
+		border-bottom: 1px solid grey;
+		padding: 0 0 20px;
+		margin: 20px 0 40px;
+		text-align: center;
+	}
+	.gDes {						/* 제품설명 - 소제목 */
+		margin: 15px 0;
+	}		
+	.button {					/* 제품설명 - 장바구니  & 결제버튼  */
+		display: inline;
+		border-width: 0.15rem;
+        border-radius: 8px;
+        background-color: white;  
+        height: 2.8em;
+        width: 6em;
+        margin: 0 5px;  
+        color: black;           
+	}
+	.button:hover {					
+        background-color: black;
+        color: white;                 
+	}
+	.reply_content {			/* 댓글 전체 영역 */
+		padding-top: 60px;
+	}	
+	.reply_input {				/* 댓글입력 그룹  */
+		display: flex;
+		flex-direction: row;
+	}
+	#img_thumbnail {			/* 댓글입력 - 썸네일 */
+		width: 100px;	
+		height: 100px;	
+	}
+    #r_name {					/* 댓글입력 - 제품명 */
+    	height: 100px;
+    	width: 120px;
+	   	margin: 0 0 0 20px;
+	   	border-width: 0.5px 0 0.5px 0.5px;	   	
+	   	border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;   	
+    }
+    #rBtn {						/* 댓글입력 - 등록버튼 */
+    	height: 100px;
+    	width: 100px;
+    	border-color: #d9dadb;
+    	border-width: 0.5px 1px 1px 0px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background-color: #e9ecef;
+    }
+    #rBtn:hover {				
+        background-color: #c8c8cb;
+        color: white;
+    }
+   	section.replyList {				/* 댓글목록 영역 */	
+   		padding: 50px 120px;   		
+  	}
+	.replyEach { 				/* 댓글목록 - 한 댓글 영역  */
+		border-bottom: 1px solid grey;
+		padding: 0 0 20px;
+		margin: 20px 0;	
+   	}  
+   
+   .userID {font-weight: bold;} /* 댓글목록 - ID */	
+   .dateTime {					/* 댓글목록 - 등록일시 */				
+		font-size: 0.8rem;
+		color: gray;
+   }
+   .replyContent {				/* 댓글목록 - 대댓글 입력칸 */
+  		
+   		padding: 15px 0 30px;
+   }  
+   #reply_btn, .replyOpen  {	/* 댓글목록 - 대댓글, 삭제버튼  */
+		color: gray;
+		margin: 5px 0;
+   } 
+   .reReply_content {			/* 댓글목록 - 대댓글  입력칸  */	
+   		height: 100px;
+    	width: 600px;
+    	border-width: 0.5px;
+    	border-color: #d9dadb;
+    	padding: 20px;
+    	margin: 10px 0;
+   }
+   #reReply_btn {				/* 댓글목록 - 대댓글 버튼  */
+   		height: 40px;
+    	width: 80px;
+    	border-color: #d9dadb;
+    	border-width: 0.5px;
+        border-radius: 4px;
+        background-color: #e9ecef;
+        color: black; 
+	}      	
+	.nonAdminReply {
+		background-color: #F2F2F2;
+		border-radius: 4px;
+		padding: 10px 0 15px 20px;
+		margin: 20px 0;	
+	}
+	form .rr_cont {
+		height: 150px;
+		width: 450px;
+		border-width: 0.5px;
+		border-color: #d9dadb;
+		padding: 20px;
+		margin: 10px 0;
+	}
+	.reply_cont {					/* 댓글입력 - 내용 */
+    	height: 100px;
+    	width: 600px;
+    	border-width: 0.5px 0;
+    	border-color: #d9dadb;
+    	padding: 20px;
+    } 
+    #re_reply_btn {						/* 댓글입력 - 등록버튼 */
+    	border-width: 0.05rem;
+        border-radius: 8px;
+        background-color: #e9ecef;  
+        height: 2.5em;
+        width: 4.8em;
+        padding: 0;
+        color: black;
+        float: center;
+        margin: 0 10px;         
+    }
+    #re_reply_btn:hover {				
+        background-color: #c8c8cb;     
+    }
+	

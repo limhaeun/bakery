@@ -1,0 +1,133 @@
+@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }	
+	body {
+	    padding: 0; 
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;
+    } 
+    .QnApost_content {
+    	padding: 30px 0 0;
+    }
+    .QnApost_title {				/* 게시글 타이틀 */
+		padding: 35px;
+		text-align: center;
+		border-bottom: 2px solid #FE9A2E;
+		width: 100%;
+	}
+	table.QnApost_table {			/* 게시글 테이블 영역 */
+		border-collapse: collapse;
+		border-spacing: 1px;
+		text-align: left;
+		line-height: 1.5;
+		border-top: 1px solid #ccc;
+		margin: 20px 30px;
+		display: table;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	table.QnApost_table th {		/* 테이블 헤드 */
+		border-collapse: collapse;
+		width: 150px;
+		padding: 10px;
+		font-weight: bold;
+		vertical-align: middle;
+		border-bottom: 1px solid #ccc;
+		background: #efefef;
+	}
+	table.QnApost_table td {		/* 테이블 데이터 */
+		border-collapse: collapse;
+		width: 450px;
+		padding: 10px;
+		vertical-align: middle;
+		border-bottom: 1px solid #ccc;
+	}
+	table.QnApost_table tbody td {	/* 문의글 내용입력 영역  */
+		padding: 30px 50px;
+	}	
+	.replyOpen {					/* 답글달기 버튼  */
+		color: black;
+		margin: 5px 0;
+	}
+	form .reply_cont {				/* 답글달기 textarea */
+		height: 150px;
+		width: 450px;
+		border-width: 0.5px;
+		border-color: #d9dadb;
+		padding: 20px;
+		margin: 10px 0;
+	}
+	.rBtn_area {					/* 답글달기 - 버튼 영역  */
+		postion: relative;
+		left: 0%;
+	}				
+	#rBtn {							/* 답글달기 - 등록,취소 버튼 */
+    	border-width: 0.01rem;
+        border-radius: 8px;
+        background-color: #e9ecef;  
+        height: 2.5em;
+        width: 4.5em;
+        padding: 0;
+        color: black;
+        float: center;
+        margin: 0 5px;          
+    }
+	#rBtn:hover {				
+        background-color: #c8c8cb;     
+    }
+    .replyList {					/* 댓글 목록  */
+    	padding: 0px 30px 50px;
+    	margin: 5px 0 50px;
+    }
+    .adminReply {					/* 댓글 각각 영역  */
+		background-color: #F2F2F2;
+		border-radius: 4px;
+		padding: 10px 0 15px 20px;
+		margin: 20px 0;	
+	}
+	.replyContent {					/* 댓글 각각 내용 영역  */
+		margin: 10px 0;
+	}
+	.buttons {						/* 버튼 영역 */
+		float:right;
+	}
+	#postList_btn {					/* 목록 버튼 */
+		border-width: 0rem;
+        color: white;
+        background-color: #ff9d4a;        	
+       	border-radius: 8px;
+       	height: 2.5em;
+        width: 3.8em;
+        margin: 0 5px;        
+        font-size: 0.9rem;          	 
+	}
+	#postList_btn:hover {                
+        border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400; 
+    } 
+	#post_btn {                		/* 수정, 삭제버튼  */       
+        border-radius: 8px;
+        border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400; 
+        height: 2.5em;
+        width: 3.8em;
+        margin: 0 5px;        
+        font-size: 0.9rem;   
+    }
+    #post_btn:hover {           	      
+        border-width: 0rem;
+        color: white;
+        background-color: #ff9d4a; 
+    } 
+	
+	
+	 	

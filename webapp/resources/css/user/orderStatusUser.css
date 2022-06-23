@@ -1,0 +1,64 @@
+@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }
+   	body {
+	    padding: 0; 
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;
+    }       
+    .mypage {				  		/* 마이페이지 전체영역 */         
+        position: relative;      
+        padding: 15px; 
+        margin: 40px 100px;
+        height: 80%;      
+    }
+    .mypage_title {					/* 마이페이지 타이틀 */
+		padding: 35px;
+		text-align: center;
+		border-bottom: 2px solid #FE9A2E;
+		width: 100%;		
+	}	
+	.mypage_order {display:inline;}	/* 주문내역 전체영역*/
+				
+	.order_title {padding: 30px;}	/* 주문내역 - 타이틀 */
+	
+	.order_table {					/* 주문내역 - 목록 */
+		padding: 0 25px;
+		font-size:0.8rem;
+	}		
+    #mypage_menu {					/* 우측메뉴 전체영역 */	   	   	       
+	    position: absolute;
+		top: 7%;
+		right: 10%;
+	    display:flex; 
+		flex-direction: column;
+		justify-content: flex-end;
+		align-content: center; 
+		align-items: center;								  	  	  
+	}
+	.mypage_link {					/* 우측메뉴 - 링크div */	   	
+		padding: 15px;
+		width: 150px;
+		border-bottom: 0.7px solid lightgray; 
+	}		
+	.pagenum {						/* 페이징 */  
+		text-align:center;	
+		margin-top: 40px;
+				
+	} 	
+	#paging_btn, .mylink {			/* 우측메뉴 - a링크, 페이징 버튼색상 */
+		color: black;
+	
+	} 
+	#paging_btn:hover, .mylink:hover {
+		color: #FE9A2E;
+		text-decoration: none;
+	} 
+     

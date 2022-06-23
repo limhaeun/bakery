@@ -1,0 +1,65 @@
+@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }	
+	body {
+		font-size: 0.9rem;
+		font-family: 'Noto Serif KR', serif;			
+	}
+	.orderinfo {					/* 주문정보 영역 */
+		padding: 30px 30px 10px;
+		
+	}
+	.orderUserinfo_title {			/* 고객용 주문정보 타이틀 */
+		border-bottom: 2.5px solid #FE9A2E;
+		margin: 10px 0 30px;
+		padding: 0 0 10px;
+	}
+	.orderinfo_title {				/* 관리자용 주문정보 타이틀 */
+		 border-bottom: 2.5px solid black;
+		 margin: 10px 0 30px;
+		 padding: 0 0 10px;
+	}
+	table.orderinfo_table {			/* 주문정보 테이블 영역 */
+		border-collapse: separate;
+		border-spacing: 1px;
+		text-align: left;
+		line-height: 1.5;
+		border-top: 1px solid #ccc;
+		margin: 20px 30px 70px;
+	}
+	table.orderinfo_table th {		/* 테이블 헤드 */
+		width: 150px;
+		padding: 10px;
+		font-weight: bold;
+		vertical-align: top;
+		border-bottom: 1px solid #ccc;
+		background: #efefef;
+	}
+	table.orderinfo_table td {		/* 테이블 데이터 */
+		width: 450px;
+		padding: 10px;
+		vertical-align: top;
+		border-bottom: 1px solid #ccc;
+	}
+	.button {						/* 배송상태버튼 */
+		display: inline;
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.8em;
+        width: 6em;
+        margin: 0 5px;
+        color: white;             
+	}
+	.button:hover {
+		border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400; 
+	}					 	

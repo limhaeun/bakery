@@ -1,0 +1,72 @@
+	@charset "UTF-8";
+	@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }
+    .error {
+		color: red;
+	} 
+	body {
+		font-family: 'Noto Serif KR', serif;  
+		font-size: 0.9rem;
+	}
+	.regit_title {					/* 상품등록 타이틀 */
+		padding: 30px;	
+		text-align: center;	
+		display: table;
+		margin-left:auto;
+		margin-right:auto;
+		width: 500px;
+		border-bottom: 1px solid lightgrey;	
+	}
+	.regit_group {					/* 상품등록폼 전체영역 */
+		margin: 30px;
+		position: relative;
+		left: 30%;
+	}
+	form #gDes  {					/* 상품설명폼 */				
+   		height: 150px;
+    	width: 450px;
+    	border-width: 0.5px;
+    	border-color: #d9dadb;
+    	padding: 20px;   	
+    }
+    .horizontal {					/* ID입력폼 + 중복버튼 */
+		display: flex;
+		flex-direction: row;
+	}
+	.button {						/* 상품번호 중복버튼 */
+		display: inline;
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.8em;
+        width: 7em;
+        margin: 0 5px;
+        color: white;             
+	}		
+	#regit_btn {					/* 상품 등록, 취소버튼 */
+    	border-width: 0rem;
+        color: white;
+        background-color: #ff9d4a;    	
+        border-radius: 8px; 
+        height: 2.5em;
+        width: 4.5em;
+        padding: 0;
+        float: center;
+        margin: 0 10px;
+    }
+    #regit_btn:hover, .button:hover {            	       
+        border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400;      
+    }    	
+	.inputArea {margin:10px 0;}		/* 썸네일 이미지 */
+	.select_img img {margin:20px 0;}
+	
+	      

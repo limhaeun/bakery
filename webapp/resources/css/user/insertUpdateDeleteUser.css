@@ -1,0 +1,71 @@
+/* 회원가입, 수정  */
+@charset "UTF-8";
+@media (min-width: 768px) {
+    .container {width: 750px;}
+    }
+    @media (min-width: 992px) {
+    .container {width: 992px;}
+    }
+    @media (min-width: 1200px) {
+    .container {width: 1440px;}
+    }
+    .error {
+		color: red;
+	} 
+	body {
+		font-family: 'Noto Serif KR', serif;  
+		font-size: 0.9rem;
+	}
+	.signup_title {					/* 회원가입 타이틀 */
+		padding: 80px;
+		text-align: center;
+		border-bottom: 2px solid #FE9A2E;
+		width: 100%;
+	}
+	.signup_group {					/* 입력폼 전체 */
+		margin: 30px;
+		position: relative;
+		margin-left: 35%;
+	}	
+	.horizontal {					/* ID입력폼 + 중복버튼 */
+		display: flex;
+		flex-direction: row;
+	}
+	#signup_btn {
+		display: inline;
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.9em;
+        width: 5.5em;
+        margin: 0 5px;
+        color: white;
+        font-size: 0.9rem; 
+	}
+	#userIdExist {						/* 중복버튼 + 회원가입버튼 */
+		display: inline;
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.9em;
+        width: 6.4em;
+        margin: 0 5px;
+        color: white;
+        font-size: 0.9rem;             
+	}
+	#userIdExist:hover, #signup_btn:hover, .button_post:hover {	/* 중복버튼 + 회원가입버튼 */		
+        border: 2px solid #fb7400;
+        background-color: white;
+        color: #fb7400;               
+	}   
+	.button_post {					/* 우편번호찾기 버튼 */
+		border-width: 0rem;
+        border-radius: 8px;
+        background-color: #ff9d4a;  
+        height: 2.8em;
+        width: 18em;
+        margin: 0 5px; 
+        color: white;          
+	}
+	#uPwd_alert {color: red;}		/* 유효성검사 메시지 */
+  
