@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cartMapper">
+
+
+<insert id="insertCart" parameterType="cartVO">
+	insert into cart(c_Id, g_Code, u_Id , c_Amount)
+	values(seq_cart.nextval, #{gCode}, #{uId}, #{cAmount})
+</insert>
+<!-- //////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////// -->
+<select resultType="cartVO" parameterType="cartVO" id="selectCartOrder">
+	 select c.c_Id as "cId", c.u_Id as "uId", c.g_Code as "gCode", c.c_Amount as "cAmount", g.g_Name as "gName", g.g_Price as "gPrice" 
+	 from CART c inner join goods g on c.g_Code = g.g_Code 
+	 where c.c_Id = #{cId}  
+</select>
+
+<select resultType="cartVO" parameterType="int" id="selectCartOne">
+	select c.c_Id as "cId", c.u_Id as "uId", c.g_Code as "gCode", c.c_Amount as "cAmount", g.g_Name as "gName", g.g_Price as "gPrice" 
+	 from CART c inner join goods g on c.g_Code = g.g_Code 
+	 where c.c_Id = #{cId}  
+</select>
+
+<!--  c.c_Id = #{cId} 
+	 and c.u_Id = #{uId}  -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<select resultType="cartVO" parameterType="User" id="selectAll">
+	 select c.c_Id as "cId", c.u_Id as "uId", c.g_Code as "gCode", c.c_Amount as "cAmount", g.g_Name as "gName", g.g_Price as "gPrice" 
+	 from CART c inner join goods g on c.g_Code = g.g_Code 
+	 where c.u_Id = #{uId} 
+</select>
+
+<delete parameterType="cartVO" id="deleteCart"> 
+	delete from cart where c_Id=#{cId} 
+</delete>
+
+<update parameterType="cartVO" id="updateCart">
+	update cart set c_Amount = #{cAmount} 
+	where c_Id =#{cId} 
+</update>
+
+<!-- ############### 카트  중복 체크 ###############-->
+<select id="checkCart" parameterType="cartVO" resultType="int">
+	  select count(*)
+	   from cart
+	   where u_Id = #{uId}
+	   and g_Code = #{gCode}
+</select>
+
+</mapper>

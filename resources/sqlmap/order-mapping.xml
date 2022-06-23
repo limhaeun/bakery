@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderMapper">
+
+	<!-- 개별주문 및 카트 주문시 주문자정보 저장 -->
+	<insert id="insertOrders" parameterType="ordersVO">
+		insert into
+		orders
+		values(#{oId},#{ouId},#{oName},#{oreceiveName},#{oPhone},#{oAddr1},#{oAddr2},
+		#{oAddr3},#{oPay},#{oTotal})
+	</insert>
+
+	<!--  주문시 세부사항저장 -->
+	<insert id="insertDetailOrders" parameterType="detailOrderVO">
+		insert into
+		DetailOrder
+		values(seq_detailOrder.nextval,#{oId},#{dgCode},#{dgName},#{dgPrice},#{dAmount},#{dgImg})
+	</insert>
+
+	<!-- 배송상태저장 -->
+	<insert id="insertOrdersState" parameterType="detailOrderVO">
+		insert into StateOrder(o_Id,d_num)
+		select #{oId}, d_num
+		from DetailOrder
+		where o_Id = #{oId}
+		and d_gCode = #{dgCode}
+	</insert>
+
+	<!-- 주문한 카트 삭제 -->
+	<delete id="deleteOrderedCart" parameterType="detailOrderVO">
+		delete
+		from cart c
+		where c.g_Code = #{dgCode,jdbcType=VARCHAR}
+	</delete>
+
+	<!--주문현황 보기 -->
+	<!-- 모든 유저의 주문 목록 -->
+	<resultMap type="ordersVO" id="orderResult">
+		<result property="oId" column="o_Id" />
+		<result property="ouId" column="o_uId" />
+		<result property="oName" column="o_Name" />
+		<result property="oreceiveName" column="o_receiveName" />
+		<result property="oAddr1" column="o_Addr1" />
+		<result property="oAddr2" column="o_Addr2" />
+		<result property="oAddr3" column="o_Addr3" />
+		<result property="oPay" column="o_Pay" />
+		<result property="oTotal" column="o_Total" />
+	</resultMap>
+
+
+
+	<!-- 유저 주문 목록 + 주문 상세 페이지 -->
+	<select id="orderDetailList" parameterType="ordersVO"
+		resultType="OrderDetailStateVO">
+		select distinct o.o_Id as "oId",o.o_uId as "ouId",o.o_Name
+		as
+		"oName",o.o_receiveName as "oreceiveName",o.o_Addr1 as
+		"oAddr1",o.o_Addr2 as "oAddr2",o.o_Addr3 as "oAddr3",o.o_Pay as
+		"oPay",o.o_Total as "oTotal"
+		,d.d_Num as "dNum", d.d_gName as "dgName",
+		d.d_gCode as "dgCode", d.d_gPrice
+		as "dgPrice", d.d_Amount as
+		"dAmount", s.s_Date as "sDate", s.s_State
+		as "sState"
+		from orders o
+		inner join DetailOrder d
+		on o.o_Id = d.o_Id
+		inner join StateOrder s
+		on
+		d.d_Num = s.d_Num
+		where o.o_Id = #{oId, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 배송 상태<배송중> -->
+	<update id="delivery">
+		update StateOrder
+		set s_State = '배송중'
+		where o_Id =
+		#{oId}
+	</update>
+
+	<!-- 배송 상태<배송완료> -->
+	<update id="deliveryFini">
+		update StateOrder
+		set s_State = '배송완료'
+		where o_Id =
+		#{oId}
+	</update>
+
+	<!-- 고객 주문 내역 -->
+	<select id="orderListUser" resultMap="orderResult">
+		<include refid="pagingHeader"></include>
+		select o_Id ,o_uId ,o_Name ,o_receiveName,
+		o_Addr1 ,o_Addr2 ,o_Addr3 ,o_Pay ,o_Total 
+		from orders 
+		where o_uId = #{uId}
+        order by substr(o_id,1,12) desc
+        
+		<include refid="pagingFooter"></include>
+	</select>	
+
+
+	<!-- ##주문 상세 목록 - 상태 변경 <주문취소> -->
+	<update id="orderCancel">
+		update StateOrder
+		set s_State = '주문취소'
+		where o_Id =
+		#{oId}
+	</update>
+
+	<!-- 유저의 이메일 가져오기 -->
+	<select id="listEmail" resultType="String">
+		select u.u_email
+		from orders o,
+		stateorder s, suser u
+		where o.o_id = s.o_id
+		and o.o_uid = u.u_id
+		and
+		s.o_id=#{oId}
+	</select>
+	
+	<!-- 11/05 17:37 추가 !! 관리자주문현황 페이징을 위한 헤더와 footer -->
+		<sql id="pagingHeader">
+			select * from (
+			select rownum as rn, orders.* from (
+		</sql>
+
+		<sql id="pagingFooter">
+			)orders
+			)where rn between #{start} and #{end}
+		</sql>
+
+	<!-- ###페이징을 위한 갯수세기용 sql ###-->
+	<select id="countPagingAdmin" resultType="int">
+		select count(*)
+		from orders
+	</select>
+
+	 <!-- 관리자가 보는 모든 유저의 주문 목록 -->
+	 <select id="orderList" resultMap="orderResult">
+			<include refid="pagingHeader"></include>
+					select o_Id ,o_uId ,o_Name ,o_receiveName 
+					,o_Addr1 ,o_Addr2 ,o_Addr3 ,o_Pay ,o_Total 
+					from orders 
+					order by substr(o_id,1,12) desc
+			<include refid="pagingFooter"></include>
+		</select>
+</mapper>  
+  

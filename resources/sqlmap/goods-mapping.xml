@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodMapper">
+
+	<select id="selectAllGoods" resultMap="GoodResult">
+		select * from goods
+		order by g_Count desc
+	</select>
+
+	<insert id="insertGood" parameterType="goodsVO">
+		insert into
+		goods(g_Code,g_Name,g_Price,g_CateCode,g_Date,g_Count,g_Img,g_Des)
+		values(#{gCode},#{gName,jdbcType=VARCHAR},#{gPrice},#{gCateCode},#{gDate},#{gCount},#{gImg},#{gDes})
+	</insert>
+
+	<delete id="deleteGood" parameterType="goodsVO">
+		delete from goods where
+		g_Code=#{gCode}
+	</delete>
+
+   <update id="updateGood" parameterType="goodsVO">
+		update goods
+		set g_Code=#{gCode},
+		g_Name=#{gName},
+		g_Price = #{gPrice},
+		g_CateCode = #{gCateCode},
+		g_Date = #{gDate},
+		g_Count = #{gCount},
+		g_Img = #{gImg},
+		<!-- <if test="gImg != null">gImg = #{gImg},</if> -->
+		g_Des= #{gDes}
+		where
+		g_Code=#{gCode} 
+	</update>
+
+	<resultMap id="GoodResult" type="goodsVO">
+		<result property="gCode" column="g_Code" />
+		<result property="gName" column="g_Name" />
+		<result property="gPrice" column="g_Price" />
+		<result property="gCateCode" column="g_CateCode" />
+		<result property="gDate" column="g_Date" />
+		<result property="gCount" column="g_Count" />
+		<result property="grCount" column="g_rCount" />
+		<result property="gImg" column="g_Img" />
+		<result property="gDes" column="g_Des" />
+	</resultMap>
+	
+	<select id="selectBygCode" parameterType="Map" resultMap="GoodResult" useCache="true">
+		select * 
+		from goods
+		where g_Code=#{gCode}
+	</select>
+	
+	<!-- 상세보기시, 조회수 증가 -->
+	<update id="upGcount" parameterType="int">
+		update goods
+		set g_Count = g_Count+1
+		where g_Code=#{gCode}
+	</update>
+	
+	<!-- #########index.jsp 페이지용 sql ######## -->
+	<!-- index.jsp에서 상품목록 페이징을 위한 count sql -->
+	<select id="countPaging" resultType="int">
+		select count(*) 
+		from goods
+	</select>
+	
+	<!-- index.jsp에서 전체 상품목록을 보여주기 위한 select sql -->
+	<select id="pagingGoods" resultMap="GoodResult">
+		<include refid="pagingHeader"></include>
+			select *
+			from goods 
+			<include refid="pagingFooter"></include>
+	</select>
+	<!-- ################################## -->
+	
+	<!-- #############검색용 sql########### -->
+	<!-- 검색시 페이징 처리를 위한 count sql -->
+	<select id="countSearch" resultType="int">
+		select count(*) 
+		from goods
+		where g_Name like '%'||#{keyword}||'%'
+		<!-- <include refid="search"></include> -->
+	</select>
+
+	<!-- 검색시 키워드에 해당하는 상품목록을 보여주기 위한 sql -->
+	<select id="searchGoods2" resultMap="GoodResult">
+		<include refid="pagingHeader"></include>
+		select *
+		from goods
+		where g_Name like
+		'%'||#{keyword, jdbcType=VARCHAR}||'%'
+		<include refid="pagingFooter"></include>
+	</select>
+
+	<!-- 카테고리 안에서 검색시 !!!! 페이징을 위한 ~ -->
+	<select id="countSearchAdmin" resultType="int">
+		select count(*)
+		from goods
+		where g_Name like '%'||#{keyword, jdbcType=VARCHAR}||'%' and
+		g_CateCode = nvl2(#{gCateCode, jdbcType=VARCHAR},#{gCateCode,
+		jdbcType=VARCHAR},g_CateCode)
+	<!-- <include refid="search"></include> -->
+	</select>
+	
+	<select id="searchGoodsAdmin" resultMap="GoodResult">
+		<include refid="pagingHeader"></include>
+		select *
+		from goods
+		where g_Name like
+		'%'||#{keyword, jdbcType=VARCHAR}||'%' and g_CateCode = nvl2(#{gCateCode,
+		jdbcType=VARCHAR},#{gCateCode, jdbcType=VARCHAR},g_CateCode)
+		<include refid="pagingFooter"></include>
+	</select>
+
+	
+	
+	<!-- ################################## -->
+		
+	<!-- paging을 위해 rownum함수를 이용한 것 ! -->
+	<sql id="pagingHeader">
+		select * from (
+		select rownum as rn, goods.* from (
+	</sql>
+	
+	<sql id="pagingFooter">
+		)goods
+		)where rn between #{start} and #{end}
+	</sql>
+	<!-- ############################### -->
+	
+	<!-- ############################### -->
+	<!-- 상품 소감(댓글,대댓글) insert -->
+	<insert id="insertReply" parameterType="replyVO" >
+		insert into reply(r_GCode, r_UId, r_Num , r_Cont, r_Pnum, r_Depth)		
+		values(#{rGCode},#{rUId},reply_seq.nextval,#{rCont}, reply_seq.currval,0)
+	</insert>
+	
+	<insert id="insertReReply" parameterType="Map">
+		insert into reply(r_GCode, r_UId, r_Num , r_Cont, r_Pnum, r_Depth)		
+		values(#{rGCode},#{rUId},reply_seq.nextval,#{rCont}, #{rPnum},1)
+	</insert>
+	
+	<!-- 상품 소감(댓글) 리스트 -->
+	<select id="selectReply"  parameterType="int" resultType="replyVO" >
+		select 
+		r_GCode as rGCode, 
+		r_UId as rUId, 
+		r_Num as rNum, 
+		r_Cont as rCont, 
+		r_RegDate as rDate,
+		r_Pnum as rPnum,
+		r_Depth as rDepth
+		from reply 
+		where r_GCode = #{rGCode}
+		order by  rPnum desc, rDepth asc
+	</select>
+	
+	<!-- 댓글의 게시글 번호 조회  -->
+	<select id="getGCode" parameterType="int" resultType="int">
+		select r_GCode
+		from reply
+		where r_Num = #{rNum}
+	</select>
+	<!-- 댓글 추가 count +1 -->
+	<update id="updateReplyCnt" parameterType="int">
+		update goods
+		set g_rCount = g_rCount +1
+		where g_Code=#{gCode}
+	</update>
+	<!-- 댓글 삭제 count -1 -->
+	<update id="updateReplyCnt2" parameterType="int">
+		update goods
+		set g_rCount = g_rCount -1
+		where g_Code=#{gCode}
+	</update>
+	<!-- 회원모드 댓글 삭제시 -->
+	<delete id="deleteUserReply" parameterType="replyVO" >
+		delete from reply 
+		where r_PNum  = #{rNum} 
+	</delete>
+	
+	
+	<!-- 관리자모드 댓글 삭제시 -->
+	<delete id="deleteAdminReply" parameterType="replyVO" >
+		delete from reply 
+		where r_Num  = #{rNum} 
+	</delete>
+	<!-- ############################### -->
+	
+	<!-- ########카테고리########## -->
+	<!-- <select id="categorySelect"  resultMap="GoodResult">
+			select * 
+			from goods
+			where g_CateCode=#{gCateCode,jdbcType=VARCHAR} 	
+	</select> -->
+
+	
+	<!-- goodCateList.jsp에서 상품목록 페이징을 위한 count sql -->
+	<select id="countPagingCate" resultType="int">
+		select count(*) 
+		from goods
+		where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 카테고리 필터 -->
+	<!-- 신상품 -->
+	<select id="cateNew" resultMap="GoodResult">
+		<include refid="pagingHeader"></include>
+			select * from goods
+			where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+			order by g_Date desc
+		<include refid="pagingFooter"></include>	
+	</select>
+	
+	<!-- 인기품 -->
+	<select id="cateHot" resultMap="GoodResult">
+	<include refid="pagingHeader"></include>
+		select * from goods
+		where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+		order by g_Count desc
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- 낮은가격 -->
+	<select id="cateLow" resultMap="GoodResult">
+	<include refid="pagingHeader"></include>
+		select * from goods
+		where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+		order by g_Price asc
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- 높은가격 -->
+	<select id="cateHigh" resultMap="GoodResult">
+	<include refid="pagingHeader"></include>
+		select * from goods
+		where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+		order by g_Price desc
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- ##########유효성검사 + gCode중복체크################# -->
+	<select id="checkgCode" parameterType="String" resultType="int">
+	  select count(*)
+	   from goods
+	   where g_Code = #{gCode}
+	</select>
+	
+	<!-- ############관리자페이지 카테고리별로 보기용#################### -->
+	<select id="adminFilter" resultMap="GoodResult">
+		<include refid="pagingHeader"></include>
+			select * from goods
+			where g_CateCode = #{gCateCode, jdbcType=VARCHAR}
+			order by g_Date desc
+		<include refid="pagingFooter"></include>
+	</select>
+</mapper>

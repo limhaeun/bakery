@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<!-- 구성 -->
+<configuration>
+
+
+<!-- 클래스 QName의 별명 -->
+<typeAliases>
+<typeAlias type="com.seven.team01.vo.CartVO" alias="cartVO" />
+<typeAlias type="com.seven.team01.vo.UserVO" alias="User" />
+<typeAlias type="com.seven.team01.vo.QnaVO" alias="QnaVO"/> 
+<typeAlias type="com.seven.team01.vo.GoodsVO" alias="goodsVO"/> 
+<typeAlias type="com.seven.team01.vo.OrdersVO" alias="ordersVO"/>
+<typeAlias type="com.seven.team01.vo.DetailOrderVO" alias="detailOrderVO"/>
+<typeAlias type="com.seven.team01.vo.StateOrderVO" alias="stateOrderVO"/>
+<typeAlias type="com.seven.team01.vo.GoodsCateVO" alias="goodsCateVO"/>
+<typeAlias type="com.seven.team01.vo.ReplyVO" alias="replyVO"/>
+<typeAlias type="com.seven.team01.vo.EmailVO" alias="emailVO"/>
+<typeAlias type="com.seven.team01.vo.QnaReplyVO" alias="QnaReplyVO"/>
+<typeAlias type="com.seven.team01.vo.OrderDetailStateVO" alias="orderDetailStateVO"/>
+
+<!-- <typeAlias type="model.POwnerDTO"  alias="powner"/> -->
+</typeAliases>
+
+
+</configuration>
+

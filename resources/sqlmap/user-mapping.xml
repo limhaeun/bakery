@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user_ns">
+   
+  
+	<cache eviction="LRU" flushInterval="60000" size="1024"  readOnly="true" /> 
+    
+    <cache eviction="FIFO" flushInterval="60000" size="1024" readOnly="true"/> 
+    
+	<resultMap id="UserResult" type="User">
+		<result property="uId" column="u_Id"/>
+		<result property="uPwd" column="u_Pwd"/>
+		<result property="uName" column="u_Name"/>
+		<result property="uEmail" column="u_Email"/>
+		<result property="uPhone" column="u_Phone"/>
+		<result property="uAddr1" column="u_Addr1"/>
+		<result property="uAddr2" column="u_Addr2"/>
+		<result property="uAddr3" column="u_Addr3"/>
+		<result property="uRegdate" column="u_Regdate"/>
+		<result property="adminYN" column="admin_yn"/>
+	</resultMap>
+
+	<!-- 회원 가입 -->
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO suser
+		VALUES(#{uId},#{uPwd},#{uName},#{uEmail},#{uPhone,jdbcType=VARCHAR}
+		,#{uAddr1,jdbcType=VARCHAR},#{uAddr2,jdbcType=VARCHAR},#{uAddr3,jdbcType=VARCHAR},sysdate
+		<if test='adminYN==0'>
+			,default)
+		</if>
+		<if test='adminYN==3'>
+			,#{adminYN})
+		</if>
+	</insert>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="checkuID" parameterType="String" resultType="int">
+	  select count(*)
+	   from suser
+	   where u_Id = #{uId}
+	</select>
+		 
+	<!-- 로그인-->
+	<select id ="login" resultMap="UserResult">
+ 		select *
+ 		from suser
+ 		where u_Id= #{uId}
+ 		and u_Pwd= #{uPwd}
+ 	</select>
+ 	
+ 	<!-- 회원정보 가져오기 -->
+ 	<select id ="selectUser" resultMap="UserResult">
+ 		select *
+ 		from suser
+ 		where u_Id= #{uId}
+ 	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+	update suser set
+	u_Pwd=#{uPwd},u_Name=#{uName},u_Email=#{uEmail},u_Phone=#{uPhone},u_Addr1=#{uAddr1},u_Addr2=#{uAddr2},u_Addr3=#{uAddr3}
+	where u_Id=#{uId}
+	</update>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteUser" parameterType="User">
+		delete from suser
+		where u_Id=#{uId}
+		<if test= "adminYN==1">	
+		and u_Pwd=#{uPwd}	
+		</if>	
+	</delete>	
+	
+<!-- user-mapping의 추가할 내용 -->
+<!-- 페이징용 유저의 오더 개수 세기! -->
+	<select id="countPagingUser" resultType="int">
+		select count(*)
+		from
+		orders o, suser s
+		where o.o_uId = s.u_Id
+		and o.o_uId=#{uId, jdbcType=VARCHAR} 
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qnaMapper">
+  
+	<cache eviction="LRU" flushInterval="60000" size="1024"  readOnly="true" />     
+    <cache eviction="FIFO" flushInterval="60000" size="1024" readOnly="true"/> 
+    
+    <insert id="insertQna" parameterType="qnaVO">
+    	insert into qna (qNum, qTitle, qContent, quId, qImg) 
+    	values (qna_seq.nextval, #{qTitle}, #{qContent}, #{quId,jdbcType=VARCHAR},#{qImg,jdbcType=VARCHAR})
+    </insert>
+
+	<select id="detailQna" resultType="qnaVO" useCache="true">
+		select * from qna
+		where qNum = #{qNum}
+	</select>
+	
+	<update id="updateQna"  parameterType="qnaVO">
+		update qna
+		set qContent = #{qContent}, qImg = #{qImg,jdbcType=VARCHAR}, qDate = sysdate
+		where qNum = #{qNum}
+	</update>
+	
+	<delete id="deleteQna" parameterType="qnaVO">
+		delete from qna
+		where qNum = #{qNum}
+	</delete>
+	
+	<insert id="ReplyInsert" parameterType="qnaVO">
+    	insert into qnaReply ( qNum, qrNum, qrContent) 
+    	values ( #{qNum}, qnareply_seq.nextval, #{qrContent})
+    </insert>
+    
+    <select id="selectQnaReply" parameterType ="int" resultType="qnaReplyVO">
+		select * from QnaReply
+		where qNum = #{qNum}
+	</select>
+	
+	<delete id="qnaReplyDelete" parameterType="int">
+		delete from QnaReply
+		where qRNum = #{qRNum}
+	</delete>
+    
+        <!-- 답변달리면 QnA 답변상태 업뎃 -->
+    <update id="updateState"  parameterType="int">
+		update qna
+		set qState = 2
+		where qNum = #{qNum}
+	</update>
+	
+	<!-- 페이징을 위한 sql -->
+	<sql id="pagingHeader">
+		select * from (
+		select rownum as rn, qna.* from (
+	</sql>
+
+	<sql id="pagingFooter">
+		)qna
+		)where rn between #{start} and #{end}
+	</sql>
+	
+	<!-- 페이징 추가함 -->
+	<select id="selectQna" resultType="qnaVO">
+	<include refid="pagingHeader"></include>
+		select * from qna
+		order by qDate desc
+	<include refid="pagingFooter"></include>
+	</select>
+	
+	<select id="countForQna" resultType="int">
+		select count(*)
+		from qna
+	</select>
+
+	    <!-- 답변삭제되면 QnA 답변상태 업뎃 -->
+    <update id="DeleteUpdateState"  parameterType="int">
+		update qna
+		set qState = 1
+		where qNum = #{qNum}
+	</update>
+</mapper>
+
